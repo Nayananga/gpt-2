@@ -2,23 +2,25 @@
 # Usage:
 #  PYTHONPATH=src ./train --dataset <file|directory|glob>
 
-import fire
 import json
 import os
-import numpy as np
-import tensorflow as tf
-import random
 import time
 
+import fire
 import horovod.tensorflow as hvd
+import numpy as np
+import tensorflow as tf
 
-import model, sample, encoder
-from load_dataset import load_dataset, Sampler
+import src.encoder as encoder
+import src.model as model
+import src.sample as sample
+from src.load_dataset import load_dataset, Sampler
 
 CHECKPOINT_DIR = 'checkpoint'
 SAMPLE_DIR = 'samples'
 
 hvd.init()
+
 
 def maketree(path):
     try:
@@ -38,7 +40,6 @@ def train_main(dataset,
                restore_from='latest',
                save_every=2000,
                combine=50000):
-
     enc = encoder.get_encoder(model_name)
     hparams = model.default_hparams()
     with open(os.path.join('models', model_name, 'hparams.json')) as f:
@@ -91,7 +92,6 @@ def train_main(dataset,
 
         sess.run(tf.global_variables_initializer())
 
-
         if restore_from == 'latest':
             ckpt = tf.train.latest_checkpoint(
                 os.path.join(CHECKPOINT_DIR, run_name))
@@ -143,7 +143,7 @@ def train_main(dataset,
             index = 0
             while index < sample_num:
                 out = sess.run(
-                    tf_sample, feed_dict={context: batch_size*[context_tokens]})
+                    tf_sample, feed_dict={context: batch_size * [context_tokens]})
                 for i in range(min(sample_num - index, batch_size)):
                     text = enc.decode(out[i])
                     text = '======== SAMPLE {} ========\n{}\n'.format(index + 1, text)
@@ -176,7 +176,7 @@ def train_main(dataset,
 
                     print(
                         '[{counter} | {time:2.2f}] loss={loss:2.2f} avg={avg:2.2f}'
-                        .format(
+                            .format(
                             counter=counter,
                             time=time.time() - start_time,
                             loss=lv,
