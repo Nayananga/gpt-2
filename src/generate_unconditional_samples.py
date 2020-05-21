@@ -1,23 +1,26 @@
 #!/usr/bin/env python3
 
-import fire
 import json
 import os
+
+import encoder
+import fire
+import model
 import numpy as np
+import sample
 import tensorflow as tf
 
-import model, sample, encoder
 
 def sample_model(
-    model_name='124M',
-    seed=None,
-    nsamples=0,
-    batch_size=1,
-    length=None,
-    temperature=1,
-    top_k=0,
-    top_p=1,
-    models_dir='models',
+        model_name='124M',
+        seed=None,
+        nsamples=0,
+        batch_size=1,
+        length=None,
+        temperature=1,
+        top_k=0,
+        top_p=1,
+        models_dir='models',
 ):
     """
     Run the sample_model
@@ -75,6 +78,6 @@ def sample_model(
                 print("=" * 40 + " SAMPLE " + str(generated) + " " + "=" * 40)
                 print(text)
 
+
 if __name__ == '__main__':
     fire.Fire(sample_model)
-

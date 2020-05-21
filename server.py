@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
 import os
+
 os.putenv('TF_CUDNN_USE_AUTOTUNE', '0')
 # Disable numpy deprecation messages
 import warnings
+
 warnings.simplefilter('ignore', category=DeprecationWarning)
 warnings.simplefilter('ignore', category=FutureWarning)
 # Disable tensorflow deprecation messages
 import tensorflow as tf
 import tensorflow.python.util.deprecation as deprecation
+
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 deprecation._PRINT_DEPRECATION_WARNINGS = False
 
 import argparse
 import json
-import numpy as np
 
 import model, sample, encoder
 
@@ -28,6 +30,7 @@ parser.add_argument('--temperature', type=float, default=1.0, help='Default temp
 parser.add_argument('--top_k', type=int, default=40, help='Default top k sampling.')
 parser.add_argument('--top_p', type=float, default=0.9, help='Default top p sampling.')
 parser.add_argument('--checkpoint', type=str, help='Load checkpoint.')
+
 
 def main():
     args = parser.parse_args()
@@ -79,6 +82,7 @@ def main():
                 text = enc.decode(out)
                 print(repr(raw_text), repr(text))
                 self.wfile.write(json.dumps({'text': [text], 'context': enc.decode(context_tokens)}).encode('utf-8'))
+
             def do_GET(self):
                 print('GET', self.path)
                 if self.path == '/info':
@@ -98,6 +102,7 @@ def main():
 
         print('Starting server...')
         httpd.serve_forever()
+
 
 if __name__ == '__main__':
     main()

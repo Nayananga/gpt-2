@@ -1,6 +1,6 @@
+import model
 import tensorflow as tf
 
-import model
 
 def top_k_logits(logits, k):
     if k == 0:
@@ -15,10 +15,11 @@ def top_k_logits(logits, k):
             tf.ones_like(logits, dtype=logits.dtype) * -1e10,
             logits,
         )
+
     return tf.cond(
-       tf.equal(k, 0),
-       lambda: logits,
-       lambda: _top_k(),
+        tf.equal(k, 0),
+        lambda: logits,
+        lambda: _top_k(),
     )
 
 
@@ -40,7 +41,8 @@ def top_p_logits(logits, p):
     )
 
 
-def sample_sequence(*, hparams, length, start_token=None, batch_size=None, context=None, temperature=1, top_k=0, top_p=1):
+def sample_sequence(*, hparams, length, start_token=None, batch_size=None, context=None, temperature=1, top_k=0,
+                    top_p=1):
     if start_token is None:
         assert context is not None, 'Specify exactly one of start_token and context!'
     else:
@@ -61,7 +63,7 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
     with tf.name_scope('sample_sequence'):
         def body(past, prev, output):
             next_outputs = step(hparams, prev, past=past)
-            logits = next_outputs['logits'][:, -1, :]  / tf.to_float(temperature)
+            logits = next_outputs['logits'][:, -1, :] / tf.to_float(temperature)
             logits = top_k_logits(logits, k=top_k)
             logits = top_p_logits(logits, p=top_p)
             samples = tf.multinomial(logits, num_samples=1, output_dtype=tf.int32)
