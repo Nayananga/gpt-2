@@ -133,7 +133,7 @@ def main():
         elif args.optimizer == 'sgd':
             opt = tf.train.GradientDescentOptimizer(learning_rate=args.learning_rate)
         else:
-            exit('Bad optimizer:', args.optimizer)
+            exit('Bad optimizer:')
 
         if args.accumulate_gradients > 1:
             if args.memory_saving_gradients:
@@ -221,6 +221,7 @@ def main():
                 fp.write(str(counter) + '\n')
 
         def generate_samples():
+            text = ''
             print('Generating samples...')
             context_tokens = data_sampler.sample(1)
             all_text = []

@@ -38,7 +38,7 @@ def gradients_collection(ys, xs, grad_ys=None, **kwargs):
 
 
 def gradients(ys, xs, grad_ys=None, checkpoints='collection', **kwargs):
-    '''
+    """
     Authors: Tim Salimans & Yaroslav Bulatov
 
     memory efficient gradient implementation inspired by "Training Deep Nets with Sublinear Memory Cost"
@@ -58,7 +58,7 @@ def gradients(ys, xs, grad_ys=None, checkpoints='collection', **kwargs):
             - 'memory': try to minimize the memory usage
                         (currently using a very simple strategy that identifies a number of bottleneck tensors in the graph to checkpoint)
             - 'collection': look for a tensorflow collection named 'checkpoints', which holds the tensors to checkpoint
-    '''
+    """
 
     #    print("Calling memsaving gradients with", checkpoints)
     if not isinstance(ys, list):
@@ -151,7 +151,8 @@ def gradients(ys, xs, grad_ys=None, checkpoints='collection', **kwargs):
 
             if not bottleneck_ts:
                 raise Exception(
-                    'unable to find bottleneck tensors! please provide checkpoint nodes manually, or use checkpoints="speed".')
+                    'unable to find bottleneck tensors! please provide checkpoint nodes manually, '
+                    'or use checkpoints="speed".')
 
             # sort the bottlenecks
             bottlenecks_sorted_lists = tf_toposort(bottleneck_ts, within_ops=fwd_ops)

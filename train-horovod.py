@@ -138,6 +138,7 @@ def train_main(dataset,
                 fp.write(str(counter) + '\n')
 
         def generate_samples():
+            text = ''
             context_tokens = data_sampler.sample(1)
             all_text = []
             index = 0

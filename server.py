@@ -1,25 +1,28 @@
 #!/usr/bin/env python3
+import argparse
+import http.server
+import json
 import os
+import warnings
+
+import tensorflow as tf
+import tensorflow.python.util.deprecation as deprecation
+
+import src.encoder as encoder
+import src.model as model
+import src.sample as sample
 
 os.putenv('TF_CUDNN_USE_AUTOTUNE', '0')
 # Disable numpy deprecation messages
-import warnings
+
 
 warnings.simplefilter('ignore', category=DeprecationWarning)
 warnings.simplefilter('ignore', category=FutureWarning)
 # Disable tensorflow deprecation messages
-import tensorflow as tf
-import tensorflow.python.util.deprecation as deprecation
+
 
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 deprecation._PRINT_DEPRECATION_WARNINGS = False
-
-import argparse
-import json
-
-import model, sample, encoder
-
-import http.server
 
 parser = argparse.ArgumentParser(
     description='Run a HTTP server proving gpt-2 sampling.',

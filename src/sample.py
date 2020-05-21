@@ -1,4 +1,4 @@
-import model
+import src.model as model
 import tensorflow as tf
 
 

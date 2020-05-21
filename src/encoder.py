@@ -6,6 +6,9 @@ from functools import lru_cache
 
 import regex as re
 
+default_models_dir = 'models'
+default_models_dir = os.path.expanduser(os.path.expandvars(default_models_dir))
+
 
 @lru_cache()
 def bytes_to_unicode():
@@ -110,7 +113,7 @@ class Encoder:
         return text
 
 
-def get_encoder(model_name, models_dir):
+def get_encoder(model_name, models_dir=default_models_dir):
     with open(os.path.join(models_dir, model_name, 'encoder.json'), 'r') as f:
         encoder = json.load(f)
     with open(os.path.join(models_dir, model_name, 'vocab.bpe'), 'r', encoding="utf-8") as f:

@@ -3,11 +3,11 @@
 import json
 import os
 
-import encoder
+import src.encoder as encoder
 import fire
-import model
+import src.model as model
 import numpy as np
-import sample
+import src.sample as sample
 import tensorflow as tf
 
 

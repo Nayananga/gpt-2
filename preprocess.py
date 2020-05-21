@@ -28,7 +28,7 @@ def main(argv):
         elif opt in ("-o", "--ofile"):
             outputfile = arg
 
-    if (inputfile == '' or outputfile == ''):
+    if inputfile == '' or outputfile == '':
         print('preprocess.py -i <inputfile> -o <outputfile>')
 
     else:
@@ -36,17 +36,15 @@ def main(argv):
 
 
 def preprocess_data(inputfile, outputfile):
-    data = ''
-
     with open(inputfile) as f:
         data = f.read()
-        f.close
+        f.close()
 
     data = re.sub(r'(\[{"type":"Module","children")', r'<|endoftext|>\1', data)
 
     with open(outputfile, 'w') as e:
         e.write(data)
-        e.close
+        e.close()
 
 
 if __name__ == "__main__":
