@@ -16,7 +16,7 @@ pycparser==2.20
 regex==2017.4.5
 requests==2.21.0
 six==1.14.0
-tensorflow==1.5.0
+tensorflow==1.14.0
 tensorflow-tensorboard==1.5.1
 termcolor==1.1.0
 toposort==1.5

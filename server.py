@@ -6,23 +6,20 @@ import os
 import warnings
 
 import tensorflow as tf
-import tensorflow.python.util.deprecation as deprecation
 
 import src.encoder as encoder
 import src.model as model
 import src.sample as sample
 
-os.putenv('TF_CUDNN_USE_AUTOTUNE', '0')
-# Disable numpy deprecation messages
+# import tensorflow.python.util.deprecation as deprecation
 
+os.putenv('TF_CUDNN_USE_AUTOTUNE', '0')
 
 warnings.simplefilter('ignore', category=DeprecationWarning)
 warnings.simplefilter('ignore', category=FutureWarning)
-# Disable tensorflow deprecation messages
-
 
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
-deprecation._PRINT_DEPRECATION_WARNINGS = False
+# deprecation._PRINT_DEPRECATION_WARNINGS = False
 
 parser = argparse.ArgumentParser(
     description='Run a HTTP server proving gpt-2 sampling.',
