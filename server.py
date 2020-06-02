@@ -55,7 +55,6 @@ def main():
             batch_size=batch_size,
             temperature=args.temperature, top_k=args.top_k, top_p=args.top_p
         )
-
         saver = tf.train.Saver()
         ckpt = tf.train.latest_checkpoint(os.path.join('models', args.model_name))
         if args.checkpoint:
@@ -79,6 +78,7 @@ def main():
                 out = sess.run(output, feed_dict={
                     context: [context_tokens]
                 })[0, context_size:]
+                writer = tf.summary.FileWriter(os.path.join('models', args.model_name), sess.graph)
                 text = enc.decode(out)
                 print(repr(raw_text), repr(text))
                 self.wfile.write(json.dumps({'text': [text], 'context': enc.decode(context_tokens)}).encode('utf-8'))

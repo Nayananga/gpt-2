@@ -12,7 +12,7 @@ import tensorflow as tf
 
 
 def interact_model(
-        model_name='124M',
+        model_name='117M',
         seed=None,
         nsamples=1,
         batch_size=1,

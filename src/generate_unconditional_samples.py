@@ -12,7 +12,7 @@ import tensorflow as tf
 
 
 def sample_model(
-        model_name='124M',
+        model_name='117M',
         seed=None,
         nsamples=0,
         batch_size=1,
