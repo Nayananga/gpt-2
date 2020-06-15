@@ -8,3 +8,5 @@ samples
 ircbot
 /env
 context.txt
+/venv/
+.idea
